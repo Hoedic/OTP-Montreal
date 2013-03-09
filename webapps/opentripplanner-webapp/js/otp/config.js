@@ -7,9 +7,14 @@
  *     which assigns the proper otp.locale.<Language> to otp.config.locale prior to including config.js (this file)
  */
 // step 1: make sure we have some type of otp.config, and otp.config.local defined
+
 if(typeof(otp) == "undefined" || otp == null) otp = {};
 if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 if(typeof(otp.config.locale) == "undefined" || otp.config.locale == null) otp.config.locale = otp.locale.English;
+
+otp.config.locale = otp.locale.French;
+//otp.config.locale.config.metricsSystem = 'international';
+
 
 /* UNCOMMNET the following to have default fares in the UI -- note: routing engine fares take precedence 
 otp.config.default_fares = {
@@ -118,7 +123,7 @@ otp.config_defaults = {
         // The default extent to zoom the map to when the web app loads.
         // This can either be an OpenLayers.Bounds object or the string "automatic"
         // If set to "automatic", the client will ask the server for the default extent.
-        defaultExtent: "automatic",
+        defaultExtent: new OpenLayers.Bounds(-73.90, 45.45, -73.40, 45.65),
 
         // These options are passed directly to the OpenLayers.Map constructor.
         options : {
@@ -152,10 +157,11 @@ otp.config_defaults = {
            // MapBox Streets Layer
            new OpenLayers.Layer.OSM(
                "Mapbox Streets", [
-                   "http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-                   "http://b.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-                   "http://c.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-                   "http://d.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png"
+                    "http://tile.stamen.com/toner/${z}/${x}/${y}.jpg"
+                    //"http://a.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    //"http://b.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    //"http://c.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    //"http://d.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png"
                ],
                {
                    numZoomLevels: 18,
