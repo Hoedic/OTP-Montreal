@@ -138,6 +138,21 @@ otp.config_defaults = {
         // If only one layer is defined in the baseLayer array, the layer switcher is disabled.
         // If there are several layers in the baseLayer array, the layer switcher is enabled and the first layer in the array becomes the default layer
         baseLayer: [
+           // here's the MapQuest baseMap option for basemap tiles
+           new OpenLayers.Layer.OSM(
+               "OSM MapQuest",[
+                   "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
+                   "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
+                   "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"
+               ],
+               {
+                   sphericalMecator : true,
+                   isBaseLayer      : true,
+                   numZoomLevels    : 19,
+                   attribution: otp.osm_att + " Tiles courtesy of <a href='http://open.mapquest.com/' target='_blank'>MapQuest</a>"
+               }
+           ),
+
            // Regular Open Street Map server
            new OpenLayers.Layer.OSM(
                "Open Street Map"
@@ -157,11 +172,10 @@ otp.config_defaults = {
            // MapBox Streets Layer
            new OpenLayers.Layer.OSM(
                "Mapbox Streets", [
-                    "http://tile.stamen.com/toner/${z}/${x}/${y}.jpg"
-                    //"http://a.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
-                    //"http://b.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
-                    //"http://c.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
-                    //"http://d.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png"
+                    "http://a.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    "http://b.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    "http://c.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png",
+                    "http://d.tiles.mapbox.com/v3/hoedic.map-w3wii74l/${z}/${x}/${y}.png"
                ],
                {
                    numZoomLevels: 18,
@@ -170,20 +184,6 @@ otp.config_defaults = {
            )
            /* comment here to test single / multiple basemaps & layer switcher on/off */
            ,
-           // here's the MapQuest baseMap option for basemap tiles
-           new OpenLayers.Layer.OSM(
-               "OSM MapQuest",[
-                   "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
-                   "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
-                   "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"
-               ],
-               {
-                   sphericalMecator : true,
-                   isBaseLayer      : true,
-                   numZoomLevels    : 19,
-                   attribution: otp.osm_att + " Tiles courtesy of <a href='http://open.mapquest.com/' target='_blank'>MapQuest</a>"
-               }
-           ),
            // here's the limited zoom example
            new OpenLayers.Layer.OSM(
                "Limited Zoom Example",[
@@ -215,7 +215,7 @@ otp.config_defaults = {
 
     // when enabled, adds another item to the accordion for attribution
     attributionPanel : {
-        enabled         : false,
+        enabled         : true,
         panelTitle      : otp.config.locale.config.attribution.title,
         attributionHtml : '<p class="disclaimer">' + otp.config.locale.config.attribution.content + '</p>'
     },

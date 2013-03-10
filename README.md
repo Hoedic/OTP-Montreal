@@ -27,7 +27,9 @@ For example, to cover the Montréal metro area, the following files were needed:
 - ASTGTM2_N46W075.zip
 
 The OTP graph builder is only able to process single files, so the gdal-bin package is needed to merge the DEM files with a commande like: 
+~~~
 	gdal_merge.py ASTGTM2_N4*_dem.tif mtl.tif
+~~~
 
 Which will result in a geotiff file ready to be processed by graph builder.
 
@@ -50,7 +52,9 @@ GTFS files have to be located where available. The graph builder is able to down
 ##Language##
 
 For Montreal, we wanted the default language to be french, which can be set in the config.js file:
+~~~
 	otp.config.locale = otp.locale.French;
+~~~
 
 This will also have the consequence of setting the metric system to 'international'.
 

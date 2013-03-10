@@ -16,7 +16,20 @@
     <link rel="stylesheet" type="text/css" href="js/lib/geoext/css/geoext-all.css" />
     <!--[if lte IE 6]> <link rel="stylesheet" href="/js/openlayers/theme/default/ie6-style.css" type="text/css" /> <![endif]-->
     <link rel="stylesheet" type="text/css" href="planner.css" />
+<style>
+#OpenLayers\.Control\.PanZoomBar_16_panleft,
+#OpenLayers\.Control\.PanZoomBar_16_panup,
+#OpenLayers\.Control\.PanZoomBar_16_pandown,
+#OpenLayers\.Control\.PanZoomBar_16_panright,
+#OpenLayers\.Control\.PanZoomBar_16_zoomworld {
+   display: none;
+}
 
+.sharebuttons {margin: 0; margin: 10px  5px 4px 5px; float: left; color: #ADBFC2}
+
+
+   
+</style>
     <!--[if IE]><script type="text/javascript" src="js/lib/excanvas.min.js"></script><![endif]-->
 
     <!-- Uncomment the line immediately below and then comment out the subsequent 3rd party JS files to use minimized 3rd party code -->
@@ -24,7 +37,7 @@
 
     <script src="js/lib/openlayers/OpenLayers.js"></script>
     <script src="js/lib/ext/adapter/ext/ext-base.js"></script>
-
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/lib/ext/ext-all-debug.js"></script>
     <script src="js/lib/ext/ComboHistory.js"></script>
     <script src="js/lib/ext/Spinner.js"></script>
@@ -44,18 +57,7 @@
     <script src="js/otp/util/Constants.js"></script>
     <script src="js/otp/util/Modes.js"></script>
     <script src="js/otp/locale/English.js"></script>
-    <script src="js/otp/locale/English_UK.js"></script>
     <script src="js/otp/locale/French.js"></script>
-    <script src="js/otp/locale/Gaelic.js"></script>
-    <script src="js/otp/locale/Hungarian.js"></script>
-    <script src="js/otp/locale/Italian.js"></script>
-    <script src="js/otp/locale/Dutch.js"></script>
-    <script src="js/otp/locale/German.js"></script>
-    <script src="js/otp/locale/Hebrew.js"></script>
-    <script src="js/otp/locale/Marathi.js"></script>
-    <script src="js/otp/locale/Polish.js"></script>
-    <script src="js/otp/locale/Portuguese.js"></script>
-    <script src="js/otp/locale/Spanish.js"></script>
     <script src="js/otp/util/AnalyticsUtils.js"></script>
     <script src="js/otp/util/DateUtils.js"></script>
     <script src="js/otp/util/ObjUtils.js"></script>
@@ -94,11 +96,27 @@
     <script src="js/otp/application/Attribution.js"></script>
     <script src="js/otp/application/Controller.js"></script>
     <script src="js/otp/config.js"></script>
-
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+		  {lang: 'fr'}
+		</script>
 
 </head>
 
 <body>
+<div id="metaheader" style="overflow:hidden; width:50px; border-bottom:1px solid #888;width:100%; padding:0px;margin:0px;position:fixed; top:0px; width:100%; background-color:#fff; height: 36px">
+<div style="float:left; padding: 6px 30px 0 10px; height:45px;"><p style="font-size:18pt;">Planificateur de trajet multimodal</p></div>
+<div style="float:left; padding: 0px 10px 0 10px; height:35px">
+                          <div class="sharebuttons"><a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></div>
+                          <div class="sharebuttons"><g:plusone  size="medium" count="false"></g:plusone></div>
+                          <div class="sharebuttons"><iframe src="//www.facebook.com/plugins/like.php?app_id=251097881595457&amp;href=http%3A%2F%2Fmultimodal.pourmontreal.net&amp;send=false&amp;layout=button_count&amp;width=80&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe></div>
+</div>
+
+<div style="float:right; padding: 10px 10px 0 0; height:45px; witdth:100px"><p id="closeme" style="cursor:pointer;"><a>Fermer</a></p></div>
+<div style="float:right; padding: 10 20px 0 0;height:45px;"><p><a href="about.html">En savoir plus</a></p></div>
+<div style="float:right; padding: 8px 50px 0 0; height:45px;"><a href="http://www.ovh.com/ca/en/"><img style="padding:0px;margin:0px" src="ovh.png" alt="Logo OVH"/></a></div>
+<div style="float:right; padding: 10px 10px 0 0; height:45px;"><p>Gracieusement hébergé par </p></div>
+</div>
+
     <!--[if lt IE 7]>
         <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 97%; position: relative; top: 5px; padding-top: 10%; margin: 0px 5px;'>
           <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
@@ -121,13 +139,29 @@
     <div class="logo" id="logo"> 
         <a href="http://opentripplanner.org" title="OpenTripPlanner Home"></a>
     </div>
-    <script>otp.util.AnalyticsUtils.importGoogleAnalytics();</script>
+    <!--script>otp.util.AnalyticsUtils.importGoogleAnalytics();</script-->
     <script type="text/javascript">
     Ext.onReady(function()
     {
-        otp.util.AnalyticsUtils.initGoogleAnalytics();
+        //otp.util.AnalyticsUtils.initGoogleAnalytics();
         new otp.application.Controller(otp.config);
+
+        $('#closeme').click(function() {
+          $('#metaheader').fadeOut('slow', function() {
+            // Animation complete.
+          });
+
+          $('#OpenLayers\\.Control\\.PanZoomBar_16_panleft').fadeIn('slow');
+          $('#OpenLayers\\.Control\\.PanZoomBar_16_panup').fadeIn('slow');
+          $('#OpenLayers\\.Control\\.PanZoomBar_16_pandown').fadeIn('slow');
+          $('#OpenLayers\\.Control\\.PanZoomBar_16_panright').fadeIn('slow');
+          $('#OpenLayers\\.Control\\.PanZoomBar_16_zoomworld').fadeIn('slow');
+
+
+        });
+
     });
     </script>
+
 </body>
 </html>
