@@ -49,6 +49,10 @@ The builder configuration item for elevation looks like that:
 GTFS files have to be located where available. The graph builder is able to download them if an URL is provided.
 
 
+###Auto-build of the Graph###
+
+In order to detect changes in GTFS files and build when needed, we use the [script developed](https://github.com/jpjodoin/transport-mtl/tree/master/dev/parser/Script) for Transport Montreal
+
 ##Language##
 
 For Montreal, we wanted the default language to be french, which can be set in the config.js file:
@@ -59,3 +63,34 @@ For Montreal, we wanted the default language to be french, which can be set in t
 This will also have the consequence of setting the metric system to 'international'.
 
 Note: In the version used, the french.js file (and several other languages) were invalid, resulting in an awkward javascript error when trying to use the language file. This can be solved by downloading the last language file on the GitHub repository.
+
+##Bikeshare data##
+
+Since Open Trip Planner supports Bixi bikesharing system and Bixi is available in Montreal, some lines of configuration will make it available.
+
+First, a little tweak. In order to have the bike sharing system visible in french, we had to add line in an obscure file. In file "webapps/opentripplanner-webapp/js/otp/application/Controller.js", add the following line under line 40:
+
+~~~
+otp.locale.French.tripPlanner.mode = otp.locale.French.tripPlanner.with_bikeshare_mode;
+~~~
+
+Then, configure the data in "webapps/opentripplanner-api-webapp/WEB-INF/classes/org/opentripplanner/api/application-context.xml" (in this case, with a refresh of the data every 5 minutes.) 
+~~~
+<bean id="periodicGraphUpdater" class="org.opentripplanner.api.servlet.PeriodicGraphUpdater">
+    <property name="updateFrequency" value="300000" />
+    <property name="updaters">
+        <list>
+            <bean class="org.opentripplanner.updater.bike_rental.BikeRentalUpdater">
+                <property name="bikeRentalDataSource">
+                    <bean class="org.opentripplanner.updater.bike_rental.BixiBikeRentalDataSource">
+                        <property name="url" value="https://montreal.bixi.com/data/bikeStations.xml" />
+                    </bean>
+                </property>
+                <property name="routerId" value="mtl" />
+            </bean>
+         </list>
+     </property>
+</bean>
+~~~
+
+

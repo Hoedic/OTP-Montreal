@@ -30,7 +30,8 @@
                             <property name="defaultBikesAllowed" value="true" />
                         </bean>
                         <bean class="org.opentripplanner.graph_builder.model.GtfsBundle">
-                            <property name="url" value="http://www.rtl-longueuil.qc.ca/CMS/MediaFree/file/GTFS/20130107.zip" />
+                            <property name="url" value="http://www.rtl-longueuil.qc.ca/CMS/MediaFree/file/GTFS/20130408.zip" />
+                            <!--property name="url" value="http://www.rtl-longueuil.qc.ca/transit/latestfeed/RTL.zip" /-->
                             <property name="defaultAgencyId" value="RTL" />
                             <property name="defaultBikesAllowed" value="true" />
                         </bean>
@@ -154,7 +155,7 @@
     <bean id="nedBuilder" class="org.opentripplanner.graph_builder.impl.ned.NEDGraphBuilderImpl">
         <property name="gridCoverageFactory">
                 <bean class="org.opentripplanner.graph_builder.impl.ned.GeotiffGridCoverageFactoryImpl">
-                    <property name="cacheDirectory" value="/otp/cache/ned/mtl.tif" />
+                    <property name="path" value="/otp/cache/ned/mtl.tif" />
                 </bean>
         </property>
     </bean>
