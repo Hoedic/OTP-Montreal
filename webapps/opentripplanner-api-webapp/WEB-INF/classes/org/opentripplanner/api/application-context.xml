@@ -34,7 +34,7 @@
     <bean id="jsonpCallbackFilter" class="org.opentripplanner.jsonp.JsonpCallbackFilter"/>
 
 <bean id="periodicGraphUpdater" class="org.opentripplanner.api.servlet.PeriodicGraphUpdater">
-    <property name="updateFrequency" value="300000" />
+    <property name="updateFrequency" value="50" />
     <property name="updaters">
         <list>
             <bean class="org.opentripplanner.updater.bike_rental.BikeRentalUpdater">
